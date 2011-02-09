@@ -35,11 +35,11 @@
     <Reference Include="System" />
     <Reference Include="OpenNI.net, Version=1.0.0.25, Culture=neutral, PublicKeyToken=6b43d0c6cf74ee7f">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Desktop\OpenNI.net.dll</HintPath>
+      <HintPath>..\OpenNI.net.dll</HintPath>
     </Reference>
     <Reference Include="XnVNite.net, Version=1.3.0.18, Culture=neutral, PublicKeyToken=null">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Desktop\XnVNite.net.dll</HintPath>
+      <HintPath>..\XnVNite.net.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
