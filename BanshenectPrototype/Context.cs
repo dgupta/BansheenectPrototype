@@ -1,10 +1,17 @@
 using System;
 using System.Collections;
+
+//needs to a be singleton ( all state objects need to be able to access this from a single point)
 namespace BanshenectPrototype
 {
-	public class Context
+	public static class Context
 	{
-		private IState CurrentState {get; set;}
+		static Context instance = null;
+		static readonly Object locking = new Object();
+		
+		
+		
+		IState CurrentState {get; set;}
 		/// <summary>
 		/// should probably make a hashtable of all the possible states
 		/// WHY: Because this will allow me to have one and only one set of states to load (in fact the state pattern might require this in some
@@ -13,22 +20,31 @@ namespace BanshenectPrototype
 		/// </summary>
 		
 		// hashtable of states -->> declaration of states happens at construction
-		private Hashtable StateTable {get; set;}
+		Hashtable StateTable {get; set;}
 		
 		
 		
 		
 		// null constructor 
-		public Context ()
+		Context ()
 		{
 		}
 		
-		//state constructor
-		public Context(IState state){
-			CurrentState = state;
-		}
-				
 		
+		//the getter for the singleton
+		public static Context Instance{
+			
+			get{
+				lock(locking){
+					if(instance == null){
+						instance = new Context();
+					}
+					return instance;
+				}
+			}
+		}
+		
+
 		public void ChangeState(string EncapsulatedRequest){
 			CurrentState.HandleRequest(EncapsulatedRequest);
 		}

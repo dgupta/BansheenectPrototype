@@ -47,6 +47,7 @@
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="Context.cs" />
     <Compile Include="IState.cs" />
+    <Compile Include="NowPlaying.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
