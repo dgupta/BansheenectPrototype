@@ -4,9 +4,9 @@ using System.Collections.Generic;
 //needs to a be singleton ( all state objects need to be able to access this from a single point)
 namespace BanshenectPrototype
 {
-	public class Context
+	public class StateContext
 	{
-		private static readonly Context instance = new Context();
+		private static readonly StateContext instance = new StateContext();
 		
 
 		public IState CurrentState {get; set;}
@@ -24,17 +24,18 @@ namespace BanshenectPrototype
 		
 		
 		// private constructor for the singleton 
-		private Context ()
+		private StateContext ()
 		{
 			
 			BuildHash();
+			//default state
 			CurrentState = StateTable["NowPlaying"];
 			
 		}
 		
 		
 		//the getter for the singleton
-		public static Context Instance{
+		public static StateContext Instance{
 			get{
 				return instance;
 			}

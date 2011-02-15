@@ -10,7 +10,7 @@ namespace BanshenectPrototype
 		}
 		
 		public void HandleRequest(string EncapsulatedRequest){
-			Context CurrentContext = Context.Instance;
+			StateContext CurrentContext = StateContext.Instance;
 			CurrentContext.CurrentState = CurrentContext.StateTable["NowPlaying"];
 			Console.WriteLine(CurrentContext.CurrentState.ToString());
 		}
