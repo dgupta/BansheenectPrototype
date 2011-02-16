@@ -80,6 +80,19 @@ namespace BanshenectPrototype
 		private void SwipeLeft(float left, float right){
 		}
 		
+		//state changer (this changes both the state and 
+		void StateChanger(string EncapsulatedRequest){
+			//first forward the request
+			CurrentContext.ChangeState(EncapsulatedRequest);
+			//Choose FlowRouter
+			ChooseFlowRouter();
+		}
+		
+		//some nice monolithic logical statement
+		void ChooseFlowRouter(){
+			
+		}
+		
 		//initializations
 		private readonly string CONFIG = @"../../config.xml";
 		StateContext CurrentContext;
