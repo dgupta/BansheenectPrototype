@@ -1,32 +1,30 @@
 using System;
 namespace BanshenectPrototype
 {
-	public class NowPlayingState : IState
+	public class ControllerState :IState
 	{
-		
-		public NowPlayingState ()
+		public ControllerState ()
 		{
 			
 		}
 		
-		public void HandleRequest(string EncapsulatedRequest){
+		#region IState implementation
+		public void HandleRequest (string EncapsulatedRequest)
+		{
 			StateContext CurrentContext = StateContext.Instance;
-			if(EncapsulatedRequest == ONPUSH){
-				
-				Console.WriteLine(CurrentContext.StateTable[SONG].ToString());
-				CurrentContext.CurrentState = CurrentContext.StateTable[SONG];
-			}
-			if(EncapsulatedRequest == SWIPEUP){
-				CurrentContext.CurrentState = CurrentContext.StateTable[CONTROLLER];
+			if(EncapsulatedRequest == SWIPEDOWN){
+				CurrentContext.CurrentState = CurrentContext.StateTable[NOW];
 			}
 			//throw it away
 			else{
-				
 			}
 		}
+		#endregion
+		
 		
 		private readonly string SWIPEUP = "SwipeUp", SWIPELEFT ="SwipeLeft",SWIPERIGHT = "SwipeRight", SWIPEDOWN = "SwipeDown", ONPUSH = "OnPush";	
 		private readonly string NOW = "NowPlaying", SONG = "SongSelection", ADDING = "AddingState", CONTROLLER = "ControllerState";
+
 	}
 }
 

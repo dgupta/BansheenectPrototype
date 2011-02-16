@@ -33,16 +33,20 @@ namespace BanshenectPrototype
 			SeshManager.SetQuickRefocusTimeout(15000);
 			//build the FlowRouter
 			Flowy  = new FlowRouter();
+			//build the Broadcaster
+			BCaster = new Broadcaster();
 			//build the detectors
 			Pushy = new PushDetector();
 			Swipy = new SwipeDetector();
 			//setup all the callbacks
 			SetupCallbacks();
-			//set the default detector
-			Flowy.SetActive(Pushy);
+			Flowy.SetActive(BCaster);
 			//add the flow router to the session
 			SeshManager.AddListener(Flowy);
-			
+			SeshManager.SessionStart += SessionStarted;
+			//add the listeners to BCaster
+			BCaster.AddListener(Pushy);
+			BCaster.AddListener(Swipy);
 		}
 		
 		private void SetupCallbacks(){
@@ -54,52 +58,74 @@ namespace BanshenectPrototype
 			Swipy.SwipeLeft += new SwipeDetector.SwipeLeftHandler(SwipeLeft);
 		}
 		
+		private void SessionStarted(ref Point3D point){
+			Console.WriteLine("{0} ", CurrentContext.CurrentState.ToString());
+			Console.WriteLine(Flowy.ToString());
+		}
+		
 		/// <summary>
 		/// The following are all Methods that detectors will call. THESE are not finalized versions simply prototypes
 		/// </summary>
 		
 		//push detectors
 		private void OnPush(float velocity, float angle){
-			Console.WriteLine("Switching to the Swipe  and to the next state");
-			CurrentContext.ChangeState("Blah");
-			Flowy.SetActive(Swipy);
+			StateChanger(ONPUSH);
 		}
 		
 		//swipe detectors clockwise (up, right,down,left)
 		private void SwipeUp(float left, float right){
-			Console.WriteLine("Swipe Up but no state change");
+			StateChanger(SWIPEUP);
 		}
 		
 		private void SwipeRight(float left, float right){
-			Console.WriteLine("Swipe right but no state change");
+			StateChanger(SWIPERIGHT);
 		}
 		
 		private void SwipeDown(float left, float right){
+			StateChanger(SWIPEDOWN);
 		}
 		
 		private void SwipeLeft(float left, float right){
+			StateChanger(SWIPELEFT);
 		}
 		
 		//state changer (this changes both the state and 
 		void StateChanger(string EncapsulatedRequest){
 			//first forward the request
+			Console.WriteLine("State Changing");
+			Console.WriteLine(EncapsulatedRequest);
 			CurrentContext.ChangeState(EncapsulatedRequest);
 			//Choose FlowRouter
-			ChooseFlowRouter();
+			SetActiveOnFlowRouter();
 		}
 		
 		//some nice monolithic logical statement
-		void ChooseFlowRouter(){
-			
+		void SetActiveOnFlowRouter(){
+			if(CurrentContext.CurrentState.ToString() == "BanshenectPrototype.NowPlayingState"){
+				Console.WriteLine("Setting to the Broadcaster");
+				Flowy.SetActive(BCaster);
+			}
+			if(CurrentContext.CurrentState.ToString() == "BanshenectPrototype.SongSelectionState" || CurrentContext.CurrentState.ToString() == "BanshenectPrototype.AddingState"){
+				Console.WriteLine("Setting to Pushy");
+				Flowy.SetActive(Pushy);
+			}
+			if(CurrentContext.CurrentState.ToString() == "BanshenectPrototype.ControllerState"){
+				Console.WriteLine("Setting to Swipy");
+				Flowy.SetActive(Swipy);
+			}
 		}
 		
 		//initializations
 		private readonly string CONFIG = @"../../config.xml";
+		//a nice list of readonly strings
+		private readonly string SWIPEUP = "SwipeUp", SWIPELEFT ="SwipeLeft",SWIPERIGHT = "SwipeRight", SWIPEDOWN = "SwipeDown", ONPUSH = "OnPush";
+		
 		StateContext CurrentContext;
 		Context Context;
 		//Managers
 		SessionManager SeshManager;
 		FlowRouter Flowy;
+		Broadcaster BCaster;
 		//Detectors
 		PushDetector Pushy;
 		SwipeDetector Swipy;

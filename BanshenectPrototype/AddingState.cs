@@ -5,15 +5,25 @@ namespace BanshenectPrototype
 	{
 		public AddingState ()
 		{
+			
 		}
 	
 
-		#region IState implementation
-		void IState.HandleRequest (string EncapsulatedRequest)
+		
+		public void HandleRequest (string EncapsulatedRequest)
 		{
-			throw new NotImplementedException ();
+			StateContext CurrentContext = StateContext.Instance;
+			if(EncapsulatedRequest == ONPUSH){
+				
+				CurrentContext.CurrentState = CurrentContext.StateTable[SONG];
+			}
+			//throw it away
+			else{
+			}
 		}
-		#endregion
-}
+		
+		private readonly string SWIPEUP = "SwipeUp", SWIPELEFT ="SwipeLeft",SWIPERIGHT = "SwipeRight", SWIPEDOWN = "SwipeDown", ONPUSH = "OnPush";	
+		private readonly string NOW = "NowPlaying", SONG = "SongSelection", ADDING = "AddingState", CONTROLLER = "ControllerState";
+	}
 }
 

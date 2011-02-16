@@ -50,9 +50,13 @@ namespace BanshenectPrototype
 		//private creation of hashtable
 		void BuildHash(){
 			StateTable = new Dictionary<string, IState>();
-			StateTable.Add("NowPlaying",new NowPlayingState());
-			StateTable.Add("SongSelection", new SongSelectionState());
+			StateTable.Add(NOW,new NowPlayingState());
+			StateTable.Add(ADDING, new AddingState());
+			StateTable.Add(CONTROLLER, new ControllerState());
+			StateTable.Add(SONG, new SongSelectionState());
 		}
+		
+		private readonly string NOW = "NowPlaying", SONG = "SongSelection", ADDING = "AddingState", CONTROLLER = "ControllerState";
 	}
 }
 
