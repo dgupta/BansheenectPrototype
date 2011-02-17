@@ -17,7 +17,7 @@ namespace BanshenectPrototype
 		/// It is in fact required.... the UML wants an aggregate of States
 		/// </summary>
 		
-		// hashtable of states -->> declaration of states happens at construction
+		// Dictionary of states -->> declaration of states happens at construction
 		public Dictionary<String,IState> StateTable {get; set;}
 		
 		
@@ -29,7 +29,7 @@ namespace BanshenectPrototype
 			
 			BuildHash();
 			//default state
-			CurrentState = StateTable["NowPlaying"];
+			CurrentState = StateTable[NOW];
 			
 		}
 		

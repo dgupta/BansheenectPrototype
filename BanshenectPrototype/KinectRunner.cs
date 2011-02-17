@@ -25,6 +25,10 @@ namespace BanshenectPrototype
 			}
 		}
 		
+		/// <summary>
+		/// Setup builds an XN Context, Session Manager and all the detectors. 
+		/// It also adds the callbacks for the SessionManager and adds the listeners on the Broadcaster. 
+		/// </summary>
 		private void Setup(){
 			//build the context
 			Context = new Context(CONFIG);
@@ -48,6 +52,10 @@ namespace BanshenectPrototype
 			BCaster.AddListener(Pushy);
 			BCaster.AddListener(Swipy);
 		}
+		
+		/// <summary>
+		/// Add the callbacks 
+		/// </summary>
 		
 		private void SetupCallbacks(){
 			Pushy.Push += new PushDetector.PushHandler(OnPush);
@@ -99,7 +107,7 @@ namespace BanshenectPrototype
 			SetActiveOnFlowRouter();
 		}
 		
-		//some nice monolithic logical statement
+		//some nice monolithic logical statements to set the active listener on the flow router
 		void SetActiveOnFlowRouter(){
 			if(CurrentContext.CurrentState.ToString() == "BanshenectPrototype.NowPlayingState"){
 				Console.WriteLine("Setting to the Broadcaster");

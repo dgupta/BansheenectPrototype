@@ -13,7 +13,7 @@ namespace BanshenectPrototype
 			StateContext CurrentContext = StateContext.Instance;
 			if(EncapsulatedRequest == ONPUSH){
 				
-				Console.WriteLine(CurrentContext.StateTable[SONG].ToString());
+				
 				CurrentContext.CurrentState = CurrentContext.StateTable[SONG];
 			}
 			if(EncapsulatedRequest == SWIPEUP){
